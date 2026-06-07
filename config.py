@@ -61,3 +61,7 @@ class Config:
 
         self.data[key] = value
         self.save()
+
+if __name__ == "__main__":
+    config = Config()
+    print(config.data)

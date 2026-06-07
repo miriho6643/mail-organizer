@@ -35,7 +35,7 @@ class MailWorker(QObject):
 
         self.running = False
 
-        self.db = Database()
+        self.db = None
 
         self.config_path = config_path
         self.config = Config().data
@@ -151,7 +151,7 @@ class MailWorker(QObject):
             self.log("Antwort gespeichert (kein Send)")
             return
 
-        if priority >= 3:
+        else:
 
             self.log("Auto-Reply wird gesendet")
 
@@ -170,12 +170,6 @@ class MailWorker(QObject):
 
             except Exception as e:
                 self.log(f"SMTP Fehler: {e}")
-
-        elif priority == 2:
-            self.log("Werbung → archiviert")
-
-        else:
-            self.log("Spam ignoriert")
 
     # --------------------------
     # GET CLIENT
@@ -223,6 +217,8 @@ class MailWorker(QObject):
     # --------------------------
 
     def run(self):
+
+        self.db = Database()
 
         self.running = True
 

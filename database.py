@@ -208,17 +208,8 @@ class Database:
     def close(self):
         self.conn.close()
 
-
 if __name__ == "__main__":
     db = Database()
-
-    db.add_email(
-        message_id="test123",
-        sender="example@test.com",
-        recipient="me@test.com",
-        subject="Testmail",
-        body="Hallo Welt"
-    )
 
     print(db.get_all_emails())
 

@@ -1,0 +1,7 @@
+emails.db
+config.json
+__pycache__/ai.cpython-311.pyc
+__pycache__/worker.cpython-311.pyc
+__pycache__/mail_client.cpython-311.pyc
+__pycache__/database.cpython-311.pyc
+__pycache__/config.cpython-311.pyc

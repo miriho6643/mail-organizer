@@ -2,37 +2,31 @@
 
 import json
 import requests
+from openai import OpenAI
 
 
 class AIClient:
-    def __init__(self, api_key, model="deepseek/deepseek-chat-v3-0324:free"):
+    def __init__(self, api_key, model="openrouter/free"):
         self.api_key = api_key
         self.model = model
-
-    def _ask(self, prompt):
-        response = requests.post(
-            "https://openrouter.ai/api/v1/chat/completions",
-            headers={
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json",
-            },
-            json={
-                "model": self.model,
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ]
-            },
-            timeout=120
+        self.client = OpenAI(
+            api_key=self.api_key,
+            base_url="https://openrouter.ai/api/v1"
         )
 
-        response.raise_for_status()
+    def _ask(self, prompt):
 
-        data = response.json()
-
-        return data["choices"][0]["message"]["content"]
+        response = self.client.chat.completions.create(
+            model=self.model,
+            messages=[
+                {
+                    "role":"user",
+                    "content":prompt
+                }
+            ]
+        )
+            
+        return response.choices[0].message.content
 
     def analyze_email(self, sender, subject, body):
         prompt = f"""
